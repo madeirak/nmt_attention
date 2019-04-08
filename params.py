@@ -4,7 +4,7 @@ import tensorflow as tf
 def create_hparams():
     params = tf.contrib.training.HParams(
         num_units = 512,#512 # Network size “门”隐藏全连接unit_mun
-        num_layers = 2,#2 # Network depth 时序深度
+        num_layers = 2,#2 # Network depth 隐藏层深度
         attention_type = 'luong', #  luong | bahdanau | None
         attention_architecture = 'standard', # standard | gnmt
         optimizer = 'sgd', # sgd , adam

@@ -12,7 +12,7 @@ param.batch_size = 1
 param.keepprob = 1
 param.encoder_vocab_size = len(data.id2cn)
 param.decoder_vocab_size = len(data.id2en)
-#param.infer_mode = 'greedy', # greedy | beam_search
+param.infer_mode = 'greedy', # greedy | beam_search
 g = BaseModel(param, 'infer')
 
 

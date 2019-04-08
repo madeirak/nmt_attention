@@ -85,12 +85,12 @@ class BaseModel():
             encoder_cell = create_rnn_cell(
                 self.unit_type,
                 self.num_units,# #num_units ”门“中的隐藏神经元个数
-                self.num_layers,# Network depth 时序RNN深度
+                self.num_layers,# Network depth RNN隐藏层深度
                 self.keep_prob) #for dropout
             encoder_init_state = encoder_cell.zero_state(#encoder_init_state.shape = [batch_size, state_size], filled with zeros
                 self.batch_size, tf.float32)
-            self.encoder_outputs, self.encoder_state = tf.nn.dynamic_rnn(#dynamic动态的
-                                                                         #encoder_state is N-tuple(N = num_layers)，包含每个LSTMcell的 LSTMStateTuple
+            self.encoder_outputs, self.encoder_state = tf.nn.dynamic_rnn(#dynamic动态的RNN，通过循环动态构建网络，不需指定时序长度
+                                                                         #encoder_state is N-tuple( N是时序长度 )，包含每个LSTMcell的 LSTMStateTuple
                                                                          #encoder_outputs.shape [batch_size, max_time, num_units(最后时间步的隐层unit_num)]
                 encoder_cell,
                 self.encoder_emb_inp,

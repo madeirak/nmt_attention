@@ -37,7 +37,7 @@ def create_rnn_cell(unit_type, num_units, num_layers, keep_prob):
             single_cell,
             output_keep_prob=keep_prob)#keep_prob:每个元素被保留的概率
         return cell
-    mul_cell = tf. contrib.rnn.MultiRNNCell(#时序堆叠RNN single cell
+    mul_cell = tf. contrib.rnn.MultiRNNCell(#堆叠RNN隐藏层
         [single_rnn_cell() for _ in range(num_layers)])
     return mul_cell
 
