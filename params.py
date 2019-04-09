@@ -34,6 +34,6 @@ def create_hparams():
         time_major = True,
         # inference
         infer_mode = 'greedy', # greedy | beam_search
-        beam_width = 1,
+        beam_width = 3,
         num_translations_per_input = 10)
     return params

@@ -113,7 +113,6 @@ class BaseModel():
                     self.num_units,
                     num_bi_layers,# Network depth RNN隐藏层深度
                     self.keep_prob) #for dropout
-
                 bw_cell = create_rnn_cell(
                     self.unit_type,
                     self.num_units,
@@ -141,6 +140,7 @@ class BaseModel():
                     for layer_id in range(num_bi_layers):
                         encoder_state.append(bi_encoder_state[0][layer_id])
                         encoder_state.append(bi_encoder_state[1][layer_id])
+                        #print('encoder_state',encoder_state)
                     self.encoder_state = tuple(encoder_state)
             else:
                 raise ValueError('Unknown encoder_type %s' % self.encoder_type)
@@ -152,6 +152,21 @@ class BaseModel():
         else:
             memory = self.encoder_outputs  #[batch_size, max_time, depth]
 
+        if self.mode == 'infer' and self.infer_mode == 'beam_search':
+            memory = tf.contrib.seq2seq.tile_batch(memory, multiplier=self.beam_width)
+            encoder_input_lengths = tf.contrib.seq2seq.tile_batch(self.encoder_input_lengths,
+                                                                   multiplier=self.beam_width)
+            encoder_state = tf.contrib.seq2seq.tile_batch(self.encoder_state, multiplier=self.beam_width)
+            batch_size = self.batch_size * self.beam_width
+
+        else:
+            batch_size = self.batch_size
+            encoder_input_lengths = self.encoder_input_lengths
+            encoder_state = self.encoder_state
+
+        dtype = tf.float32
+
+
         with tf.name_scope('decoder'):
             cell =create_rnn_cell(
                 self.unit_type,
@@ -162,15 +177,20 @@ class BaseModel():
                 self.attention_type,
                 self.num_units,
                 memory,
-                self.encoder_input_lengths)
+                encoder_input_lengths
+            )
+            #alignment_history = (self.mode == 'infer' and self.beam_width == 0)
+
             cell = tf.contrib.seq2seq.AttentionWrapper(
                 cell,
                 attention_mechanism,
+                #alignment_history=alignment_history,
                 attention_layer_size=self.num_units   #注意（输出）层的深度，不为None时，将上下文向量和单元输出送到关注层以在每个时间步产生注意力
             )
 
-            init_state = cell.zero_state(self.batch_size, tf.float32).clone(
-                cell_state=self.encoder_state)
+            '''!!!'''
+            init_state = cell.zero_state(batch_size, dtype).clone(
+                cell_state = encoder_state)
 
             projection_layer = Dense(self.decoder_vocab_size, use_bias=False)
 
@@ -183,7 +203,7 @@ class BaseModel():
                 cell,
                 train_helper,
                 init_state,
-                output_layer=projection_layer#应用于RNN输出的层 （Dense）
+                #output_layer=projection_layer#应用于RNN输出的层 （Dense）
             )
             outputs, _, _ = tf.contrib.seq2seq.dynamic_decode(#return (final_outputs, final_state, final_sequence_lengths)
                 train_decoder,
@@ -191,7 +211,8 @@ class BaseModel():
                 swap_memory=True #swap交换，是否为此循环启用GPU-CPU内存交换
             )
 
-            logits = outputs.rnn_output
+            logits = Dense(self.decoder_vocab_size, use_bias=False)(outputs.rnn_output)
+
 
             with tf.name_scope('optimizer'):
                 # loss
@@ -199,7 +220,7 @@ class BaseModel():
                     labels=self.decoder_targets,
                     logits=logits
                 )
-                self.cost = tf.reduce_sum((loss * self.mask) / self.batch_size)#loss*mask 只算target位置loss，不算<PAD>
+                self.cost = tf.reduce_sum((loss * self.mask) / batch_size)#loss*mask 只算target位置loss，不算<PAD>
                 tf.summary.scalar('loss', self.cost)
                 # learning_rate decay
                 self.global_step = tf.Variable(0)
@@ -236,8 +257,8 @@ class BaseModel():
                     global_step=self.global_step)
 
         elif self.mode == 'infer':
-            start_tokens = tf.ones([self.batch_size,], tf.int32) * 1
-            end_token = 2
+            start_tokens = tf.ones([batch_size,], tf.int32) * 1  #1 : idx of <GO>
+            end_token = 2  #2 : idx of <EOS>
             self.infer_mode = self.infer_mode[0]
 
             if self.infer_mode == 'greedy':
@@ -270,6 +291,9 @@ class BaseModel():
 
             #print('final_state : ',final_state)
 
+            # decoder_outputs是一个namedtuple，里面包含两项(rnn_outputs, sample_id)
+            # rnn_outputs: [batch_size, decoder_targets_length, vocab_size]
+            # sample_id: [batch_size] 保存最后的编码结果，可以表示最后的答案
             if self.infer_mode == 'greedy':
                 self.translations = decoder_outputs.sample_id
 
@@ -280,7 +304,8 @@ class BaseModel():
                 translations = decoder_outputs.predicted_ids
                 self.translations = tf.reduce_sum(translations,-1)
 
-                self.logits = tf.no_op()
+                logits = tf.no_op()
+                print('logits', logits)
 
 
             else:
