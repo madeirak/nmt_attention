@@ -12,6 +12,7 @@ param = create_hparams()
 param.epochs = 10
 param.encoder_vocab_size = len(data.id2cn)
 param.decoder_vocab_size = len(data.id2en)
+param.encoder_type = 'uni'
 g = BaseModel(param, 'train')
 
 

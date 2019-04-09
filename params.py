@@ -6,6 +6,7 @@ def create_hparams():
         num_units = 512,#512 # Network size “门”隐藏全连接unit_mun
         num_layers = 2,#2 # Network depth 隐藏层深度
         attention_type = 'luong', #  luong | bahdanau | None
+        encoder_type ='uni',  #uni | bi
         attention_architecture = 'standard', # standard | gnmt
         optimizer = 'sgd', # sgd , adam
         learning_rate = 1., # sgd:1, Adam:0.0001

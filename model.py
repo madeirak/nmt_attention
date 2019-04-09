@@ -17,6 +17,8 @@ class BaseModel():
         # networks
         self.num_units = params.num_units
         self.num_layers = params.num_layers
+        # encoder
+        self.encoder_type = params.encoder_type
         # attention type and architecture
         self.attention_type = params.attention_type
         self.attention_architecture = params.attention_architecture
@@ -82,25 +84,66 @@ class BaseModel():
 
     def _encoder_init(self):
         with tf.name_scope('encoder'):
-            encoder_cell = create_rnn_cell(
-                self.unit_type,
-                self.num_units,# #num_units ”门“中的隐藏神经元个数
-                self.num_layers,# Network depth RNN隐藏层深度
-                self.keep_prob) #for dropout
-            encoder_init_state = encoder_cell.zero_state(#encoder_init_state.shape = [batch_size, state_size], filled with zeros
-                self.batch_size, tf.float32)
-            self.encoder_outputs, self.encoder_state = tf.nn.dynamic_rnn(#dynamic动态的RNN，通过循环动态构建网络，不需指定时序长度
-                                                                         #encoder_state is N-tuple( N是时序长度 )，包含每个LSTMcell的 LSTMStateTuple
-                                                                         #encoder_outputs.shape [batch_size, max_time, num_units(最后时间步的隐层unit_num)]
-                encoder_cell,
-                self.encoder_emb_inp,
+            if self.encoder_type == 'uni' :
+                encoder_cell = create_rnn_cell(
+                    self.unit_type,
+                    self.num_units,# #num_units ”门“中的隐藏神经元个数
+                    self.num_layers,# Network depth RNN隐藏层深度
+                    self.keep_prob) #for dropout
+                encoder_init_state = encoder_cell.zero_state(#encoder_init_state.shape = [batch_size, state_size], filled with zeros
+                    self.batch_size, tf.float32)
 
-                #sequence_length: 1-D 用来指定每个句子的有效长度（除去PAD） 超出的部分直接复制最后一个有效状态，并输出零向量
-                sequence_length=self.encoder_input_lengths,
 
-                time_major=self.time_major,#输入输出tensor格式，如果真，必须为[max_time, batch_size, depth]，否则[batch_size, max_time, depth]
-                initial_state=encoder_init_state)#RNN初始状态，如果cell.state_size是整数，则必须形状是[batch_size, cell.state_size]的Tensor
+                # dynamic动态的RNN，通过循环动态构建网络，不需指定时序长度
+                # encoder_state is N-tuple( N是时序长度 )，包含每个LSTMcell的 LSTMStateTuple
+                # encoder_outputs.shape [batch_size, max_time, num_units(最后时间步的隐层unit_num)]
+                self.encoder_outputs, self.encoder_state = tf.nn.dynamic_rnn(
+                    encoder_cell,
+                    self.encoder_emb_inp,
+                    #sequence_length: 1-D 用来指定每个句子的有效长度（除去PAD） 超出的部分直接复制最后一个有效状态，并输出零向量
+                    sequence_length=self.encoder_input_lengths,
+                    time_major=self.time_major,#输入输出tensor格式，如果真，必须为[max_time, batch_size, depth]，否则[batch_size, max_time, depth]
+                    initial_state=encoder_init_state)#RNN初始状态，如果cell.state_size是整数，则必须形状是[batch_size, cell.state_size]的Tensor
 
+            elif self.encoder_type == 'bi':
+                #num_bi_layers = 1
+                num_bi_layers =self.num_layers // 2
+                fw_cell = create_rnn_cell(
+                    self.unit_type,
+                    self.num_units,
+                    num_bi_layers,# Network depth RNN隐藏层深度
+                    self.keep_prob) #for dropout
+
+                bw_cell = create_rnn_cell(
+                    self.unit_type,
+                    self.num_units,
+                    num_bi_layers,  # Network depth RNN隐藏层深度
+                    self.keep_prob)  # for dropout
+                bw_init_state = bw_cell.zero_state(
+                    # encoder_init_state.shape = [batch_size, state_size], filled with zeros
+                    self.batch_size, tf.float32)
+                fw_init_state = fw_cell.zero_state(
+                    # encoder_init_state.shape = [batch_size, state_size], filled with zeros
+                    self.batch_size, tf.float32)
+
+                bi_outputs, bi_state = tf.nn.bidirectional_dynamic_rnn(
+                    fw_cell, bw_cell, self.encoder_emb_inp,
+                    sequence_length=self.encoder_input_lengths,
+                    time_major=self.time_major,
+                    initial_state_fw=fw_init_state,
+                    initial_state_bw=bw_init_state)
+                self.encoder_outputs = tf.concat(bi_outputs, -1)
+                bi_encoder_state = bi_state
+                if num_bi_layers == 1:
+                    self.encoder_state = bi_encoder_state
+                else:
+                    encoder_state = []
+                    for layer_id in range(num_bi_layers):
+                        encoder_state.append(bi_encoder_state[0][layer_id])
+                        encoder_state.append(bi_encoder_state[1][layer_id])
+                    self.encoder_state = tuple(encoder_state)
+            else:
+                raise ValueError('Unknown encoder_type %s' % self.encoder_type)
 
     def _decoder_init(self):
 
