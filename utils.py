@@ -45,7 +45,7 @@ def create_rnn_cell(unit_type, num_units, num_layers, keep_prob):
 
 class GenData(object):
     """docstring for GenData."""
-    def __init__(self, filepath='cn2en.txt', mode='jieba', data_length=20000):
+    def __init__(self, filepath='self.txt', mode='jieba', data_length=20000):
         super(GenData, self).__init__()
         self.filepath = filepath
         self.mode = mode

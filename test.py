@@ -3,7 +3,7 @@ from params import create_hparams
 from model import BaseModel
 import jieba
 import tensorflow as tf
-
+import matplotlib.pyplot as plt
 
 data = GenData('self.txt','jieba',20)#(filepath, mode, data_length)
 param = create_hparams()
@@ -39,10 +39,29 @@ def inference(data):
             print('output english:', outputs)
 
 
+            print()
+
+            '''
+            attention_plot = attention_plot[:len(outputs.split(' ')), :len(inputs.split(' '))]
+            plot_attention(attention_plot, inputs.split(' '), outputs.split(' '))
+            '''
             #print('inputs : ',inputs)
             #print('outputs : ',outputs)
             #attention_plot = attention_plot[:len(outputs.split(' ')), :len(inputs)]
             #plot_attention(attention_plot, inputs, outputs.split(' '))
+
+
+def plot_attention(attention, sentence, predicted_sentence):
+    fig = plt.figure(figsize=(10, 10))
+    ax = fig.add_subplot(1, 1, 1)
+    ax.matshow(attention, cmap='viridis')
+    fontdict = {'fontsize': 14}
+    ax.set_xticklabels([''] + sentence, fontdict=fontdict, rotation=90)
+    ax.set_yticklabels([''] + predicted_sentence, fontdict=fontdict)
+    plt.show()
+
+
+
 
 inference(data)
 

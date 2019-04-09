@@ -2,23 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8608268-514d-478b-8c2d-47136099ec67" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HowToUseModel.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmn.txt" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/checkpoint" beforeDir="false" afterPath="$PROJECT_DIR$/model/checkpoint" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/model_1.data-00000-of-00001" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/model_1.index" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/model_1.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/tensorboard/events.out.tfevents.1553854201.MADERIAK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/tensorboard/events.out.tfevents.1553854373.MADERIAK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/tensorboard/events.out.tfevents.1553854458.MADERIAK" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/openEmbedding.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/params.py" beforeDir="false" afterPath="$PROJECT_DIR$/params.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/segmentationTool.ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,7 +18,7 @@
     <SUITE FILE_PATH="coverage/nmt_self$train.coverage" NAME="train Coverage Results" MODIFIED="1554100299803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/translation_gnmt$trans.coverage" NAME="trans Coverage Results" MODIFIED="1553693983493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/translation_audier$train.coverage" NAME="train Coverage Results" MODIFIED="1553854451210" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/nmt_self$test.coverage" NAME="test Coverage Results" MODIFIED="1554271863493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/nmt_self$test.coverage" NAME="test Coverage Results" MODIFIED="1554717879056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/nmt_self$utils.coverage" NAME="utils Coverage Results" MODIFIED="1554090614468" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/translation_audier$test.coverage" NAME="test Coverage Results" MODIFIED="1553855908162" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/translation_audier$trans.coverage" NAME="trans Coverage Results" MODIFIED="1553851298767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -40,43 +26,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1640">
-              <caret line="87" column="50" selection-start-line="87" selection-start-column="50" selection-end-line="87" selection-end-column="50" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
-              <folding>
-                <element signature="e#0#23#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/params.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+            <state relative-caret-position="208">
+              <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="617">
-              <caret line="201" column="40" selection-start-line="201" selection-start-column="40" selection-end-line="201" selection-end-column="40" />
+            <state relative-caret-position="122">
+              <caret line="122" column="16" selection-start-line="122" selection-start-column="12" selection-end-line="122" selection-end-column="16" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -87,8 +49,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            <state relative-caret-position="-544">
+              <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -104,7 +81,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>HanLP</find>
       <find>mode</find>
       <find>time_major</find>
       <find>epochs</find>
@@ -118,7 +94,6 @@
       <find>global_step</find>
       <find>astype</find>
       <find>next</find>
-      <find>translations</find>
       <find>add_num</find>
       <find>encoder_inputs</find>
       <find>attention_architecture</find>
@@ -132,6 +107,10 @@
       <find>object</find>
       <find>encoder_vocab_size</find>
       <find>lstm</find>
+      <find>beam</find>
+      <find>num_layers</find>
+      <find>translations</find>
+      <find>logits</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -144,18 +123,18 @@
         <option value="$PROJECT_DIR$/123.py" />
         <option value="$PROJECT_DIR$/train.py" />
         <option value="$PROJECT_DIR$/model/checkpoint" />
-        <option value="$PROJECT_DIR$/model.py" />
-        <option value="$PROJECT_DIR$/params.py" />
         <option value="$PROJECT_DIR$/model2.py" />
+        <option value="$PROJECT_DIR$/params.py" />
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/model.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-9" />
-    <option name="width" value="978" />
-    <option name="height" value="1039" />
+    <option name="x" value="950" />
+    <option name="width" value="980" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -169,6 +148,11 @@
             <path>
               <item name="nmt_self" type="b2602c69:ProjectViewProjectNode" />
               <item name="nmt_self" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="nmt_self" type="b2602c69:ProjectViewProjectNode" />
+              <item name="nmt_self" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -340,11 +324,13 @@
       <workItem from="1554170639851" duration="13687000" />
       <workItem from="1554258392793" duration="13422000" />
       <workItem from="1554344905001" duration="88000" />
+      <workItem from="1554708429233" duration="9417000" />
+      <workItem from="1554777499167" duration="1953000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69586000" />
+    <option name="totallyTimeSpent" value="80956000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -356,15 +342,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17627347" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17158177" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.0509915" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.19627507" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -450,13 +436,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/self.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="19" selection-start-column="19" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../Anaconda3/envs/DeepSpeechRecognition/Lib/site-packages/tensorflow/python/ops/clip_ops.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="206">
@@ -475,20 +454,23 @@
     <entry file="file://$PROJECT_DIR$/HowToUseModel.ipynb" />
     <entry file="file://$PROJECT_DIR$/openEmbedding.ipynb" />
     <entry file="file://$PROJECT_DIR$/segmentationTool.ipynb" />
-    <entry file="file://$PROJECT_DIR$/utils.py">
+    <entry file="file://$PROJECT_DIR$/../forOneThing/base-RNN.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/self.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1640">
-          <caret line="87" column="50" selection-start-line="87" selection-start-column="50" selection-end-line="87" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../123/src/att_seq2seq_delete_and_copy.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
+        <state relative-caret-position="-384">
+          <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
@@ -497,24 +479,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/params.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+        <state relative-caret-position="208">
+          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        <state relative-caret-position="-544">
+          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="617">
-          <caret line="201" column="40" selection-start-line="201" selection-start-column="40" selection-end-line="201" selection-end-column="40" />
+        <state relative-caret-position="122">
+          <caret line="122" column="16" selection-start-line="122" selection-start-column="12" selection-end-line="122" selection-end-column="16" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>

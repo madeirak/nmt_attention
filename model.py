@@ -195,6 +195,8 @@ class BaseModel():
         elif self.mode == 'infer':
             start_tokens = tf.ones([self.batch_size,], tf.int32) * 1
             end_token = 2
+            self.infer_mode = self.infer_mode[0]
+
             if self.infer_mode == 'greedy':
                 infer_helper = tf.contrib.seq2seq.GreedyEmbeddingHelper(#使用输出logits的argmax并将结果传递给嵌入层以获取下一个输入
                     embedding=self.decoder_embedding,
@@ -219,10 +221,27 @@ class BaseModel():
             else:
                 raise ValueError('unkown infer mode %s' % self.infer_mode)
 
-            decoder_outputs, _, _ = tf.contrib.seq2seq.dynamic_decode(
+            decoder_outputs,_,_ = tf.contrib.seq2seq.dynamic_decode(
                 decoder=infer_decoder,
                 maximum_iterations=50)#允许的最大解码步数
-            self.translations = decoder_outputs.sample_id
+
+            #print('final_state : ',final_state)
+
+            if self.infer_mode == 'greedy':
+                self.translations = decoder_outputs.sample_id
+
+                logits = decoder_outputs.rnn_output
+                print('logits',logits)
+
+            elif self.infer_mode == 'beam_search':
+                translations = decoder_outputs.predicted_ids
+                self.translations = tf.reduce_sum(translations,-1)
+
+                self.logits = tf.no_op()
+
+
+            else:
+                raise ValueError('unkown infer mode %s' % self.infer_mode)
 
 
 
