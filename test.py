@@ -5,6 +5,7 @@ import jieba
 import tensorflow as tf
 import matplotlib.pyplot as plt
 
+
 data = GenData('self.txt','jieba',20)#(filepath, mode, data_length)
 param = create_hparams()
 # infer模式下需要改动
@@ -22,6 +23,7 @@ def inference(data):
     with tf.Session() as sess:
         latest = tf.train.latest_checkpoint('model')
         saver.restore(sess, latest)
+        print('输入exit，敲回车结束.')
         while True:
             inputs = input('input chinese: ')
             if inputs == 'exit': break
@@ -36,11 +38,17 @@ def inference(data):
                 g.encoder_input_lengths: encoder_length}
             predict = sess.run(g.translations, feed_dict=feed)
             #print(predict)
-            outputs = ' '.join([data.id2en[i] for i in predict[0][:-1]])
+            if param.infer_mode[0] == 'beam_search':
+                predict = predict[0]
+                predict = list(predict[i][0]for i in range(predict.shape[1]))
+                outputs = ' '.join([data.id2en[i] for i in predict[:-1]])
+
+            else:#greedy
+                outputs = ' '.join([data.id2en[i] for i in predict[0][:-1]])
             print('output english:', outputs)
 
 
-            print()
+
 
             '''
             attention_plot = attention_plot[:len(outputs.split(' ')), :len(inputs.split(' '))]

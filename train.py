@@ -9,7 +9,7 @@ from model import BaseModel
 data = GenData('self.txt','jieba',20)#(filepath, mode, data_length)
 param = create_hparams()
 #param.out_dir = 'model'
-param.epochs = 10
+param.epochs = 120
 param.encoder_vocab_size = len(data.id2cn)
 param.decoder_vocab_size = len(data.id2en)
 param.encoder_type = 'bi'    #uni | bi
