@@ -194,12 +194,15 @@ class BaseModel():
                 memory,
                 encoder_input_lengths
             )
-            #alignment_history = (self.mode == 'infer' and self.beam_width == 0)
+
+
+            #alignment_history之后用于可视化attention
+            alignment_history = (self.mode == 'infer' and self.infer_mode[0] != "beam_search")
 
             cell = tf.contrib.seq2seq.AttentionWrapper(
                 cell,
                 attention_mechanism,
-                #alignment_history=alignment_history,
+                alignment_history=alignment_history,
                 attention_layer_size=self.num_units   #注意（输出）层的深度，不为None时，将上下文向量和单元输出送到关注层以在每个时间步产生注意力
             )
 
@@ -305,11 +308,15 @@ class BaseModel():
             else:
                 raise ValueError('unkown infer mode %s' % infer_mode)
 
-            decoder_outputs,_,_ = tf.contrib.seq2seq.dynamic_decode(
+            decoder_outputs,final_context_state,_ = tf.contrib.seq2seq.dynamic_decode(
                 decoder=infer_decoder,
                 maximum_iterations=50)#允许的最大解码步数
 
-            #print('final_state : ',final_state)
+            #print('final_context_state : ',final_context_state)
+
+            # [decoder_steps, batch_size, encoder_steps]
+            self.inference_attention_matrices = final_context_state.alignment_history.stack(
+                name="inference_attention_matrix")
 
             # decoder_outputs是一个namedtuple，里面包含两项(rnn_outputs, sample_id)
             # rnn_outputs: [batch_size, decoder_targets_length, vocab_size]
@@ -319,6 +326,8 @@ class BaseModel():
 
                 logits = decoder_outputs.rnn_output
                 #print('logits',logits)
+
+
 
             elif infer_mode == 'beam_search':
                 # = decoder_outputs.predicted_ids
@@ -336,3 +345,5 @@ class BaseModel():
 
 
 
+if __name__  == '__main__':
+    pass

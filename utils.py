@@ -1,9 +1,7 @@
 import numpy as np
 import tensorflow as tf
-#from pyhanlp import *
 import jieba
-import os
-import matplotlib.pyplot as plt
+
 
 
 # attention_mechanism
@@ -116,20 +114,6 @@ class GenData(object):
             target_weights = mask.astype(np.int32)#mask bool 转为int后赋给target_weights，用于计算loss
             yield encoder_inputs, decoder_inputs, decoder_targets, \
                     target_weights, encoder_lengths, decoder_lengths
-
-
-# function for plotting the attention weights
-def plot_attention(attention, sentence, predicted_sentence):
-    fig = plt.figure(figsize=(10, 10))
-    ax = fig.add_subplot(1, 1, 1)
-    ax.matshow(attention, cmap='viridis')
-
-    fontdict = {'fontsize': 14}
-
-    ax.set_xticklabels([''] + sentence, fontdict=fontdict, rotation=90)
-    ax.set_yticklabels([''] + predicted_sentence, fontdict=fontdict)
-    plt.show()
-
 
 
 
