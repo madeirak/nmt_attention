@@ -8,3 +8,6 @@
 注意力可选LuongAttention、BahdanauAttention
 
 最终实现中文2英文翻译
+
+
+![](https://github.com/madeirak/nmt_attention/blob/master/image/att_map.png)
