@@ -9,7 +9,7 @@ import pandas as pd
 import seaborn as sns
 
 
-data = GenData('self.txt','jieba',20)#(filepath, mode, data_length)
+data = GenData('cn2en.txt','jieba',20)#(filepath, mode, data_length)
 param = create_hparams()
 # infer模式下需要改动
 param.batch_size = 1
@@ -17,7 +17,7 @@ param.keepprob = 1
 param.encoder_vocab_size = len(data.id2cn)
 param.decoder_vocab_size = len(data.id2en)  #107
 
-param.infer_mode = 'greedy', # greedy | beam_search
+param.infer_mode = 'beam_search', # greedy | beam_search
 g = BaseModel(param, 'infer')
 
 
@@ -39,15 +39,18 @@ def inference(data):
             feed = {
                 g.encoder_inputs: encoder_inputs,
                 g.encoder_input_lengths: encoder_length}
-            predict,attention = sess.run([g.translations,g.inference_attention_matrices], feed_dict=feed)
+
+
             #print(predict)
             if param.infer_mode[0] == 'beam_search':
+                predict = sess.run(g.translations, feed_dict=feed)
                 predict = predict[0]
                 predict = list(predict[i][0]for i in range(predict.shape[1]))
                 outputs = ' '.join([data.id2en[i] for i in predict[:-1]])
                 print('output english:', outputs)
 
             else:#greedy
+                predict, attention = sess.run([g.translations, g.inference_attention_matrices], feed_dict=feed)
                 outputs = ' '.join([data.id2en[i] for i in predict[0][:-1]])
                 print('output english:', outputs)
 
