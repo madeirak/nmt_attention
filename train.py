@@ -3,13 +3,14 @@ import os
 from utils import GenData
 from params import create_hparams
 from model import BaseModel
+from tqdm import tqdm
 
 
-
-data = GenData('self.txt','jieba',20)#(filepath, mode, data_length)
+data = GenData('cn2en.txt','jieba',10000)#(filepath, mode, data_length)
 param = create_hparams()
 #param.out_dir = 'model'
 param.epochs = 10
+param.batch_size = 16
 param.encoder_vocab_size = len(data.id2cn)
 param.decoder_vocab_size = len(data.id2en)
 param.encoder_type = 'bi'    #uni | bi
@@ -30,12 +31,14 @@ def train(self, data):
         writer = tf.summary.FileWriter(
             'model/tensorboard', tf.get_default_graph())
 
+        batch_num = len(data.data) // self.batch_size
+        print('batch_num : ',batch_num)
 
         for k in range(self.epochs):
             total_loss = 0
-            batch_num = len(data.data) // self.batch_size
+            acc_sum = 0
             data_generator = data.generator(self.batch_size)
-            for i in range(batch_num):
+            for i in tqdm(range(batch_num)):
                 en_inp, de_inp, de_tg, mask, en_len, de_len = next(
                     data_generator)
                 #print(mask)
@@ -46,14 +49,14 @@ def train(self, data):
                     g.mask: mask,#用于计算batch_loss
                     g.encoder_input_lengths: en_len,
                     g.decoder_input_lengths: de_len}
-                cost, _ = sess.run([g.cost, g.update], feed_dict=feed)
+                cost, _, acc = sess.run([g.cost, g.update, g.acc], feed_dict=feed)
                 total_loss += cost
+                acc_sum += acc
                 if (k * batch_num + i) % 10 == 0:
                     rs = sess.run(merged, feed_dict=feed)
                     writer.add_summary(rs, k * batch_num + i)
 
-            print('epochs', k+add_num+1, ': average loss = ', total_loss / batch_num)
-
+            print('epochs', k+add_num+1, ': average loss = ', round(total_loss / batch_num,6),': average acc = ',round(acc_sum / batch_num,5)*100,'%')
 
         saver.save(sess, 'model/model_%d' % (self.epochs + add_num))
         writer.close()

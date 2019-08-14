@@ -3,7 +3,7 @@ import jieba
 #from pyhanlp import *
 from tensorflow.python.layers.core import Dense
 import numpy as np
-from utils import attention_mechanism_fn, create_rnn_cell
+from utils import attention_mechanism_fn, create_rnn_cell,GetEditDistance
 import os
 
 
@@ -234,6 +234,14 @@ class BaseModel():
             #logits = Dense(self.decoder_vocab_size, use_bias=False)(outputs.rnn_output)
             logits = outputs.rnn_output
 
+
+            self.preds = tf.to_int32(tf.argmax(logits, axis=-1))
+            self.istarget = tf.to_float(tf.not_equal(self.decoder_targets, 0))
+            self.acc = tf.reduce_sum(tf.to_float(tf.equal(self.preds, self.decoder_targets)) * self.istarget) / (tf.reduce_sum(self.istarget))
+            tf.summary.scalar('acc', self.acc)
+
+            #print('logits',logits)
+            #print('self.decoder_targets',self.decoder_targets)
             with tf.name_scope('optimizer'):
                 # loss
                 loss = tf.nn.sparse_softmax_cross_entropy_with_logits(#sparse 稀疏
@@ -314,14 +322,19 @@ class BaseModel():
 
             #print('final_context_state : ',final_context_state)
 
-            # [decoder_steps, batch_size, encoder_steps]
-            self.inference_attention_matrices = final_context_state.alignment_history.stack(
-                name="inference_attention_matrix")
 
             # decoder_outputs是一个namedtuple，里面包含两项(rnn_outputs, sample_id)
             # rnn_outputs: [batch_size, decoder_targets_length, vocab_size]
             # sample_id: [batch_size] 保存最后的编码结果，可以表示最后的答案
+
+
+
+
             if infer_mode == 'greedy':
+                # [decoder_steps, batch_size, encoder_steps]
+                self.inference_attention_matrices = final_context_state.alignment_history.stack(
+                    name="inference_attention_matrix")
+
                 self.translations = decoder_outputs.sample_id
 
                 logits = decoder_outputs.rnn_output
